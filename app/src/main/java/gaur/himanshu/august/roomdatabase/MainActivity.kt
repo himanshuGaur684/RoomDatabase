@@ -23,31 +23,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        /** initialize our _list for observing data from the Room*/
         viewModel.getAllPersons()
 
+        /** attach adapter to the recycler view*/
         binding.roomRecycler.apply {
             adapter = personAdapter
         }
 
+        /** handle the save button */
         binding.saveDataButton.setOnClickListener {
-
-
             val person = Person(
                     name = binding.personName.text.toString().trim(),
                     age = binding.personAge.text.toString().trim().toInt()
             )
-
             viewModel.insert(person)
-
         }
 
+        /** observe the viewmodel list */
         viewModel.list.observe(this) {
             it?.let {
                 personAdapter.setContentList(it)
             }
         }
 
-
+        /** delete the adapter list item*/
         personAdapter.setOnLongItemClickListener {
             viewModel.delete(it)
         }

@@ -15,19 +15,19 @@ import javax.inject.Singleton
 @Module
 object HiltModules {
 
-
+    /** Hilt Module to tell the Dagger Hilt how to inject PersonDao and PersonRespository */
 
 
     @Provides
     @Singleton
-    fun providePersonDao(@ApplicationContext context:Context):PersonDao{
+    fun providePersonDao(@ApplicationContext context: Context): PersonDao {
         return PersonDatabase.getInstance(context).getPersonDao()
     }
 
 
     @Singleton
     @Provides
-    fun personRepo(personDao: PersonDao):PersonRepo{
+    fun personRepo(personDao: PersonDao): PersonRepo {
         return PersonRepo(personDao)
     }
 

@@ -12,13 +12,15 @@ import javax.inject.Inject
 @HiltViewModel
 class PersonViewModel @Inject constructor(private val personRepo: PersonRepo) : ViewModel() {
 
-
+    /** observing this list into MainActivity and update our view*/
     private val _list = MutableLiveData<List<Person>>()
     val list: LiveData<List<Person>> = _list
 
 
     fun insert(person: Person) = viewModelScope.launch {
+        /** insert data to Room*/
         personRepo.insert(person)
+        /** and then update our list which we are observing to the MainActivity*/
         _list.postValue(personRepo.getAllPersons())
     }
 
